@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cờ Caro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Game Cờ Caro</h1>
+        <div id="menu">
+            <button id="start-ai">Bắt đầu với AI</button>
+            <button id="start-two">Bắt đầu với 2 người</button>
+        </div>
+        <div id="game-board" style="display: none;"></div>
+        <p id="game-status"></p>
+        <button id="reset-button" style="display: none;">Chơi lại</button>
+        <div id="win-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p id="win-message"></p>
+                <button id="play-again">Chơi lại nào!</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const startAIButton = document.getElementById('start-ai');
+        const startTwoButton = document.getElementById('start-two');
+
+        startAIButton.addEventListener('click', () => loadScript('scriptAI.js'));
+        startTwoButton.addEventListener('click', () => loadScript('scriptTwo.js'));
+
+        function loadScript(src) {
+            // Xóa script cũ
+            const existingScript = document.querySelector('script[data-dynamic]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Reset giao diện về trạng thái ban đầu
+            document.getElementById('game-board').style.display = 'none';
+            document.getElementById('reset-button').style.display = 'none';
+            document.getElementById('win-modal').style.display = 'none';
+            document.getElementById('menu').style.display = 'block';
+            document.getElementById('game-status').textContent = '';
+
+            // Tải script mới
+            const script = document.createElement('script');
+            script.src = src;
+            script.dataset.dynamic = true;
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
